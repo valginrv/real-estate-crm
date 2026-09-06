@@ -29,7 +29,7 @@ interface LeadResponse {
 })
 export class LeadService {
 
-  private apiUrl = 'http://localhost:5000/api/leads';
+  private apiUrl = 'https://real-estate-crm-mbso.onrender.com/api/api/leads';
 
   constructor(private http: HttpClient) {}
 

@@ -22,7 +22,7 @@ interface BuildingResponse {
 })
 export class BuildingService {
 
-  private apiUrl = 'http://localhost:5000/api/buildings';
+  private apiUrl = 'https://real-estate-crm-mbso.onrender.com/api/buildings';
 
   constructor(private http: HttpClient) {}
 

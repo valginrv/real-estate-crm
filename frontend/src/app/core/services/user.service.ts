@@ -20,7 +20,7 @@ interface SalesUserResponse {
 export class UserService {
 
   private apiUrl =
-    'http://localhost:5000/api/users';
+    'https://real-estate-crm-mbso.onrender.com/api/users';
 
   constructor(private http: HttpClient) {}
 

@@ -41,7 +41,7 @@ interface BookingResponse {
 export class BookingService {
 
   private apiUrl =
-    'http://localhost:5000/api/bookings';
+    'https://real-estate-crm-mbso.onrender.com/api/bookings';
 
   constructor(
     private http: HttpClient

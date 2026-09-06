@@ -26,7 +26,7 @@ interface UnitResponse {
 export class UnitService {
 
   private apiUrl =
-    'http://localhost:5000/api/units';
+    'https://real-estate-crm-mbso.onrender.com/api/units';
 
   constructor(private http: HttpClient) {}
 

@@ -19,7 +19,7 @@ interface ProjectResponse {
 })
 export class ProjectService {
 
-  private apiUrl = 'http://localhost:5000/api/projects';
+  private apiUrl = 'https://real-estate-crm-mbso.onrender.com/api/projects';
 
   constructor(private http: HttpClient) {}
 
