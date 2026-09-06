@@ -24,7 +24,7 @@ export interface SalesEmployee {
 })
 export class AuthService {
 
-  private apiUrl = 'https://real-estate-crm-mbso.onrender.com/api/auth';
+  private apiUrl = 'http://localhost:5000/api/auth';
 
   constructor(private http: HttpClient) {}
 

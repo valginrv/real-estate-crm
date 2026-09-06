@@ -17,7 +17,7 @@ export interface DashboardStats {
 export class DashboardService {
 
   private apiUrl =
-    'https://real-estate-crm-mbso.onrender.com/api/dashboard';
+    'http://localhost:5000/api/dashboard';
 
   constructor(private http: HttpClient) {}
 

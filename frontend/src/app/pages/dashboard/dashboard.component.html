@@ -1,33 +1,41 @@
-<div class="container-fluid p-4">
+<div class="container-fluid py-4">
+
+  <!-- ========================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================= -->
 
   <div class="d-flex justify-content-between align-items-center mb-4">
+
     <div>
-      <h3 class="fw-bold mb-1">Dashboard</h3>
+      <h3 class="fw-bold mb-1">
+        Dashboard
+      </h3>
+
       <p class="text-muted mb-0">
-        Real Estate CRM overview
+        Real Estate CRM Overview
       </p>
     </div>
 
     <button
-      class="btn btn-outline-primary"
-      (click)="loadStats()">
+      type="button"
+      class="btn btn-primary"
+      (click)="loadStats()"
+      [disabled]="loading">
+
+      <span
+        *ngIf="loading"
+        class="spinner-border spinner-border-sm me-2">
+      </span>
+
       Refresh
     </button>
-  </div>
-
-
-  <div
-    *ngIf="loading"
-    class="text-center py-5">
-
-    <div class="spinner-border text-primary"></div>
-
-    <p class="mt-2 text-muted">
-      Loading dashboard...
-    </p>
 
   </div>
 
+
+  <!-- ========================= -->
+  <!-- ERROR -->
+  <!-- ========================= -->
 
   <div
     *ngIf="errorMessage"
@@ -38,79 +46,258 @@
   </div>
 
 
-  <div
-    class="row g-4"
-    *ngIf="stats && !loading">
+  <!-- ========================= -->
+  <!-- LOADING -->
+  <!-- ========================= -->
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+  <div
+    *ngIf="loading"
+    class="text-center py-5">
+
+    <div
+      class="spinner-border text-primary">
+    </div>
+
+    <p class="mt-2 text-muted">
+      Loading dashboard...
+    </p>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- STAT CARDS -->
+  <!-- ========================= -->
+
+  <div
+    *ngIf="stats"
+    class="row g-4">
+
+
+    <!-- Total Leads -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">Total Leads</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            Total Leads
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.totalLeads }}
           </h3>
+
         </div>
+
       </div>
+
     </div>
 
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+    <!-- New Leads -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">New Leads</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            New Leads
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.newLeads }}
           </h3>
+
         </div>
+
       </div>
+
     </div>
 
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+    <!-- Follow Ups -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">Follow-ups</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            Follow-ups
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.followUps }}
           </h3>
+
         </div>
+
       </div>
+
     </div>
 
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+    <!-- Bookings -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">Bookings</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            Bookings
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.totalBookings }}
           </h3>
+
         </div>
+
       </div>
+
     </div>
 
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+    <!-- Available Units -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">Available Units</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            Available Units
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.availableUnits }}
           </h3>
+
         </div>
+
       </div>
+
     </div>
 
 
-    <div class="col-md-4 col-lg-2">
-      <div class="card border-0 shadow-sm">
+    <!-- Booked Units -->
+
+    <div class="col-xl-2 col-lg-4 col-md-6">
+
+      <div class="card border-0 shadow-sm h-100">
+
         <div class="card-body">
-          <small class="text-muted">Booked Units</small>
-          <h3 class="fw-bold mt-2">
+
+          <p class="text-muted mb-2">
+            Booked Units
+          </p>
+
+          <h3 class="fw-bold mb-0">
             {{ stats.bookedUnits }}
           </h3>
+
         </div>
+
       </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- GRAPHS -->
+  <!-- ========================= -->
+
+  <div
+    *ngIf="stats"
+    class="row g-4 mt-2">
+
+
+    <!-- ========================= -->
+    <!-- CRM BAR CHART -->
+    <!-- ========================= -->
+
+    <div class="col-lg-8">
+
+      <div class="card border-0 shadow-sm h-100">
+
+        <div class="card-body">
+
+          <h5 class="fw-bold mb-1">
+            CRM Overview
+          </h5>
+
+          <p class="text-muted small mb-4">
+            Leads and booking performance
+          </p>
+
+
+          <!-- IMPORTANT HEIGHT -->
+
+          <div
+            style="
+              position: relative;
+              height: 350px;
+              width: 100%;
+            ">
+
+            <canvas #crmChart></canvas>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- UNITS DOUGHNUT -->
+    <!-- ========================= -->
+
+    <div class="col-lg-4">
+
+      <div class="card border-0 shadow-sm h-100">
+
+        <div class="card-body">
+
+          <h5 class="fw-bold mb-1">
+            Units Overview
+          </h5>
+
+          <p class="text-muted small mb-4">
+            Available vs booked units
+          </p>
+
+
+          <!-- IMPORTANT HEIGHT -->
+
+          <div
+            style="
+              position: relative;
+              height: 350px;
+              width: 100%;
+            ">
+
+            <canvas #unitsChart></canvas>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
   </div>
