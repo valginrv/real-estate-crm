@@ -188,10 +188,7 @@ const getLeadById = async (req, res) => {
 
 const updateLead = async (req, res) => {
   try {
-
-    const lead = await Lead.findById(
-      req.params.id
-    );
+    const lead = await Lead.findById(req.params.id);
 
     if (!lead) {
       return res.status(404).json({
@@ -199,21 +196,16 @@ const updateLead = async (req, res) => {
       });
     }
 
-    // Sales can update only
-    // their assigned leads
+    // Sales can update only their assigned leads
     if (
       req.user.role === "sales" &&
-      lead.assignedTo?.toString() !==
-        req.user.userId
+      lead.assignedTo?.toString() !== req.user.userId
     ) {
       return res.status(403).json({
-        message:
-          "You can update only your assigned leads"
+        message: "You can update only your assigned leads"
       });
     }
 
-    // Don't directly assign
-    // empty assignedTo
     const updateData = {
       name: req.body.name,
       phone: req.body.phone,
@@ -224,40 +216,36 @@ const updateLead = async (req, res) => {
       followUpDate: req.body.followUpDate
     };
 
-    // Admin can change assignment
-    if (
-      req.user.role === "admin" &&
-      req.body.assignedTo
-    ) {
-      updateData.assignedTo =
-        req.body.assignedTo;
+    // ADMIN
+    if (req.user.role === "admin") {
+      const assignedTo = req.body.assignedTo;
+
+      // Only assign if valid value is received
+      if (
+        assignedTo &&
+        assignedTo !== "undefined" &&
+        assignedTo !== "null"
+      ) {
+        updateData.assignedTo = assignedTo;
+      }
     }
 
-    // Sales cannot change assignment
+    // SALES
     if (req.user.role === "sales") {
-      updateData.assignedTo =
-        req.user.userId;
+      updateData.assignedTo = req.user.userId;
     }
 
-    Object.assign(
-      lead,
-      updateData
-    );
+    Object.assign(lead, updateData);
 
     await lead.save();
 
     res.json({
-      message:
-        "Lead updated successfully",
+      message: "Lead updated successfully",
       lead
     });
 
   } catch (error) {
-
-    console.error(
-      "UPDATE LEAD ERROR:",
-      error
-    );
+    console.error("UPDATE LEAD ERROR:", error);
 
     res.status(500).json({
       message: "Server error"
