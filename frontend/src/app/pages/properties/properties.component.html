@@ -1,0 +1,1001 @@
+<div class="container-fluid">
+
+  <!-- ========================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================================= -->
+
+  <div
+    class="d-flex justify-content-between align-items-center mb-4"
+  >
+
+    <div>
+
+      <h3 class="fw-bold mb-1">
+        Properties
+      </h3>
+
+      <p class="text-muted mb-0">
+        Manage projects, buildings and units
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#addProjectModal"
+    >
+
+      + Add Project
+
+    </button>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- PROJECT ERROR -->
+  <!-- ========================================= -->
+
+  <div
+    *ngIf="errorMessage"
+    class="alert alert-danger"
+  >
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- PROJECT LOADING -->
+  <!-- ========================================= -->
+
+  <div
+    *ngIf="loading"
+    class="text-center py-5"
+  >
+
+    <div class="spinner-border text-primary"></div>
+
+    <p class="text-muted mt-2">
+      Loading projects...
+    </p>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- EMPTY PROJECT -->
+  <!-- ========================================= -->
+
+  <div
+    *ngIf="!loading && projects.length === 0"
+    class="card border-0 shadow-sm"
+  >
+
+    <div
+      class="card-body text-center py-5"
+    >
+
+      <h5>
+        No Projects Found
+      </h5>
+
+      <p class="text-muted">
+        Create your first property project.
+      </p>
+
+
+      <button
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addProjectModal"
+      >
+
+        Add Project
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- PROJECT CARDS -->
+  <!-- ========================================= -->
+
+  <div
+    class="row g-4"
+    *ngIf="!loading && projects.length > 0"
+  >
+
+    <div
+      class="col-12 col-md-6 col-xl-4"
+      *ngFor="let project of projects"
+    >
+
+      <div
+        class="card border-0 shadow-sm h-100"
+      >
+
+        <div class="card-body">
+
+          <div
+            class="d-flex justify-content-between align-items-start"
+          >
+
+            <div>
+
+              <h5 class="fw-bold mb-2">
+                {{ project.name }}
+              </h5>
+
+              <p class="text-muted mb-3">
+                {{ project.location }}
+              </p>
+
+            </div>
+
+
+            <span class="badge bg-primary">
+              Project
+            </span>
+
+          </div>
+
+
+          <p class="text-muted mb-0">
+
+            {{
+              project.description ||
+              'No description available'
+            }}
+
+          </p>
+
+        </div>
+
+
+        <!-- CARD FOOTER -->
+
+        <div
+          class="card-footer bg-white border-0"
+        >
+
+          <div class="d-flex flex-wrap gap-2">
+
+            <!-- View Buildings -->
+
+            <button
+              type="button"
+              class="btn btn-primary btn-sm"
+              (click)="viewBuildings(project)"
+            >
+
+              View Buildings
+
+            </button>
+
+
+            <!-- Edit -->
+
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              (click)="editProject(project)"
+            >
+
+              Edit
+
+            </button>
+
+
+            <!-- Delete -->
+
+            <button
+              type="button"
+              class="btn btn-outline-danger btn-sm"
+              (click)="deleteProject(project._id)"
+            >
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- BUILDINGS SECTION -->
+  <!-- ========================================= -->
+
+  <div
+    *ngIf="selectedProject"
+    class="card border-0 shadow-sm mt-4"
+  >
+
+    <!-- BUILDING HEADER -->
+
+    <div
+      class="card-header bg-white border-0
+             d-flex justify-content-between
+             align-items-center"
+    >
+
+      <div>
+
+        <h5 class="fw-bold mb-1">
+
+          {{ selectedProject.name }}
+
+        </h5>
+
+        <small class="text-muted">
+
+          {{ selectedProject.location }}
+
+        </small>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#addBuildingModal"
+      >
+
+        + Add Building
+
+      </button>
+
+    </div>
+
+
+    <!-- BUILDING BODY -->
+
+    <div class="card-body">
+
+
+      <!-- Building Error -->
+
+      <div
+        *ngIf="buildingError"
+        class="alert alert-danger"
+      >
+
+        {{ buildingError }}
+
+      </div>
+
+
+      <!-- Building Loading -->
+
+      <div
+        *ngIf="buildingLoading"
+        class="text-center py-4"
+      >
+
+        <div
+          class="spinner-border text-primary"
+        ></div>
+
+        <p class="text-muted mt-2">
+          Loading buildings...
+        </p>
+
+      </div>
+
+
+      <!-- Empty Buildings -->
+
+      <div
+        *ngIf="
+          !buildingLoading &&
+          buildings.length === 0 &&
+          !buildingError
+        "
+        class="text-center py-4"
+      >
+
+        <h6>
+          No Buildings Found
+        </h6>
+
+        <p class="text-muted mb-0">
+          Add a building to this project.
+        </p>
+
+      </div>
+
+
+      <!-- Building Cards -->
+
+      <div
+        class="row g-3"
+        *ngIf="
+          !buildingLoading &&
+          buildings.length > 0
+        "
+      >
+
+        <div
+          class="col-12 col-md-6 col-lg-4"
+          *ngFor="let building of buildings"
+        >
+
+          <div
+            class="card border shadow-sm h-100"
+          >
+
+            <div class="card-body">
+
+              <h5 class="fw-bold mb-2">
+
+                {{ building.name }}
+
+              </h5>
+
+
+              <p class="text-muted mb-0">
+
+                Building
+
+              </p>
+
+            </div>
+
+
+            <div
+              class="card-footer bg-white border-0"
+            >
+
+              <button
+  type="button"
+  class="btn btn-outline-primary btn-sm"
+  (click)="viewUnits(building)"
+>
+  View Units
+</button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ADD / EDIT PROJECT MODAL -->
+<!-- ================================================= -->
+
+<div
+  class="modal fade"
+  id="addProjectModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-dialog modal-dialog-centered"
+  >
+
+    <div class="modal-content">
+
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+
+          {{
+            isEditMode
+              ? 'Edit Project'
+              : 'Add Project'
+          }}
+
+        </h5>
+
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <form
+        [formGroup]="projectForm"
+        (ngSubmit)="createProject()"
+      >
+
+        <div class="modal-body">
+
+
+          <!-- Project Name -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Project Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Enter project name"
+            >
+
+
+            <small
+              class="text-danger"
+              *ngIf="
+                projectForm.controls.name.touched &&
+                projectForm.controls.name.invalid
+              "
+            >
+
+              Project name is required
+
+            </small>
+
+          </div>
+
+
+          <!-- Location -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Location
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="location"
+              placeholder="Enter location"
+            >
+
+
+            <small
+              class="text-danger"
+              *ngIf="
+                projectForm.controls.location.touched &&
+                projectForm.controls.location.invalid
+              "
+            >
+
+              Location is required
+
+            </small>
+
+          </div>
+
+
+          <!-- Description -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Description
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="3"
+              formControlName="description"
+              placeholder="Enter description"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+
+            Cancel
+
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+
+            {{
+              isEditMode
+                ? 'Update Project'
+                : 'Create Project'
+            }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ADD BUILDING MODAL -->
+<!-- ================================================= -->
+
+<div
+  class="modal fade"
+  id="addBuildingModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+
+  <div
+    class="modal-dialog modal-dialog-centered"
+  >
+
+    <div class="modal-content">
+
+
+      <!-- HEADER -->
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Add Building
+        </h5>
+
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <form
+        [formGroup]="buildingForm"
+        (ngSubmit)="createBuilding()"
+      >
+
+        <div class="modal-body">
+
+
+          <!-- Selected Project -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Project
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              [value]="selectedProject?.name"
+              disabled
+            >
+
+          </div>
+
+
+          <!-- Building Name -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Building Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Example: Building A"
+            >
+
+
+            <small
+              class="text-danger"
+              *ngIf="
+                buildingForm.controls.name.touched &&
+                buildingForm.controls.name.invalid
+              "
+            >
+
+              Building name is required
+
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+
+            Cancel
+
+          </button>
+
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+
+            Create Building
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  *ngIf="selectedBuilding"
+  class="card border-0 shadow-sm mt-4"
+>
+
+  <div
+    class="card-header bg-white border-0
+           d-flex justify-content-between
+           align-items-center"
+  >
+
+    <div>
+
+      <h5 class="fw-bold mb-1">
+        {{ selectedBuilding.name }}
+      </h5>
+
+      <small class="text-muted">
+        Units
+      </small>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#addUnitModal"
+    >
+      + Add Unit
+    </button>
+
+  </div>
+
+
+  <div class="card-body">
+
+    <div
+      *ngIf="unitLoading"
+      class="text-center py-4"
+    >
+      <div class="spinner-border text-primary"></div>
+
+      <p class="text-muted mt-2">
+        Loading units...
+      </p>
+    </div>
+
+
+    <div
+      *ngIf="unitError"
+      class="alert alert-danger"
+    >
+      {{ unitError }}
+    </div>
+
+
+    <div
+      *ngIf="
+        !unitLoading &&
+        units.length === 0 &&
+        !unitError
+      "
+      class="text-center py-4"
+    >
+
+      <h6>No Units Found</h6>
+
+      <p class="text-muted">
+        Add the first unit to this building.
+      </p>
+
+    </div>
+
+
+    <div
+      class="table-responsive"
+      *ngIf="
+        !unitLoading &&
+        units.length > 0
+      "
+    >
+
+      <table class="table table-hover align-middle">
+
+        <thead>
+
+          <tr>
+            <th>Unit</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Status</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let unit of units">
+
+            <td class="fw-semibold">
+              {{ unit.unitNumber }}
+            </td>
+
+            <td>
+              {{ unit.type }}
+            </td>
+
+            <td>
+              ₹{{ unit.price | number }}
+            </td>
+
+            <td>
+
+              <span
+                class="badge"
+                [ngClass]="
+                  unit.status === 'Available'
+                    ? 'bg-success'
+                    : 'bg-danger'
+                "
+              >
+                {{ unit.status }}
+              </span>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  class="modal fade"
+  id="addUnitModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Add Unit
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <form
+        [formGroup]="unitForm"
+        (ngSubmit)="createUnit()"
+      >
+
+        <div class="modal-body">
+
+
+          <!-- Building -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Building
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              [value]="selectedBuilding?.name"
+              disabled
+            >
+
+          </div>
+
+
+          <!-- Unit Number -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Unit Number
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="unitNumber"
+              placeholder="Example: 101"
+            >
+
+            <small
+              class="text-danger"
+              *ngIf="
+                unitForm.controls.unitNumber.touched &&
+                unitForm.controls.unitNumber.invalid
+              "
+            >
+              Unit number is required
+            </small>
+
+          </div>
+
+
+          <!-- Type -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Type
+            </label>
+
+            <select
+              class="form-select"
+              formControlName="type"
+            >
+
+              <option value="1BHK">
+                1 BHK
+              </option>
+
+              <option value="2BHK">
+                2 BHK
+              </option>
+
+              <option value="3BHK">
+                3 BHK
+              </option>
+
+              <option value="4BHK">
+                4 BHK
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Price -->
+
+          <div class="mb-3">
+
+            <label class="form-label">
+              Price
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              formControlName="price"
+              placeholder="Enter price"
+            >
+
+            <small
+              class="text-danger"
+              *ngIf="
+                unitForm.controls.price.touched &&
+                unitForm.controls.price.invalid
+              "
+            >
+              Price must be greater than 0
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+          >
+            Create Unit
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

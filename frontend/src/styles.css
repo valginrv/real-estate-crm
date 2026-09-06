@@ -1,0 +1,451 @@
+/* =========================
+   Global
+========================= */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   Main Layout
+========================= */
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-content {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+  overflow-x: hidden;
+}
+
+
+/* =========================
+   Navbar
+========================= */
+
+.navbar {
+  min-height: 65px;
+  z-index: 1030;
+}
+
+.navbar-brand {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.navbar .btn {
+  white-space: nowrap;
+}
+
+
+/* =========================
+   Sidebar
+========================= */
+
+.sidebar {
+  width: 240px;
+  min-height: calc(100vh - 65px);
+  flex-shrink: 0;
+  background-color: #212529;
+}
+
+.sidebar-title {
+  padding: 24px 20px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.sidebar .nav {
+  padding: 0 8px;
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 45px;
+  padding: 12px 16px;
+  margin: 3px 0;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+.sidebar .nav-link:focus {
+  box-shadow: none;
+}
+
+
+/* =========================
+   Footer
+========================= */
+
+.footer {
+  margin-top: auto;
+  min-height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================
+   Cards
+========================= */
+
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  background-color: #ffffff;
+}
+
+
+/* =========================
+   Tables
+========================= */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  min-width: 700px;
+  margin-bottom: 0;
+}
+
+.table th {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+
+/* =========================
+   Forms
+========================= */
+
+.form-control,
+.form-select {
+  min-height: 42px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+
+/* =========================
+   Buttons
+========================= */
+
+.btn {
+  border-radius: 6px;
+}
+
+.btn-sm {
+  white-space: nowrap;
+}
+
+
+/* =========================
+   Modal
+========================= */
+
+.modal-content {
+  border: none;
+  border-radius: 12px;
+}
+
+.modal-header {
+  padding: 18px 24px;
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+}
+
+
+/* =========================
+   Mobile Menu Button
+========================= */
+
+.mobile-menu-btn {
+  display: none;
+}
+
+
+/* =========================
+   Mobile Overlay
+========================= */
+
+.sidebar-overlay {
+  display: none;
+}
+
+
+/* =========================
+   Tablet View
+========================= */
+
+@media (max-width: 991.98px) {
+
+  .sidebar {
+    width: 210px;
+  }
+
+  .sidebar .nav-link {
+    padding: 11px 14px;
+    font-size: 14px;
+  }
+
+  .app-content {
+    padding: 18px;
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+  }
+
+}
+
+
+/* =========================
+   Mobile View
+========================= */
+
+@media (max-width: 767.98px) {
+
+  .app-body {
+    display: block;
+  }
+
+  .app-content {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Hamburger button visible */
+  .mobile-menu-btn {
+    display: inline-block;
+    margin: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Sidebar hidden by default */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+
+    width: 260px;
+    height: 100vh;
+    min-height: 100vh;
+
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  /* Sidebar open */
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-title {
+    padding: 20px 16px;
+  }
+
+  .sidebar .nav {
+    display: flex;
+    flex-direction: column;
+    padding: 0 12px;
+  }
+
+  .sidebar .nav-link {
+    min-height: 46px;
+    padding: 12px 16px;
+    margin: 3px 0;
+    font-size: 15px;
+  }
+
+  /* Dark overlay */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Navbar */
+  .navbar {
+    min-height: 58px;
+    padding: 10px 12px !important;
+  }
+
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .navbar .text-end {
+    display: none;
+  }
+
+  .navbar .btn {
+    font-size: 13px;
+  }
+
+  /* Footer */
+  .footer {
+    min-height: 50px;
+    padding: 12px !important;
+    font-size: 12px;
+  }
+
+  /* Modal */
+  .modal-dialog {
+    margin: 8px;
+  }
+
+  .modal-header {
+    padding: 16px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .modal-footer {
+    padding: 12px 16px;
+  }
+
+}
+
+
+/* =========================
+   Small Mobile View
+========================= */
+
+@media (max-width: 575.98px) {
+
+  .app-content {
+    padding: 10px;
+  }
+
+  .mobile-menu-btn {
+    margin: 10px;
+  }
+
+  .navbar-brand {
+    font-size: 17px;
+  }
+
+  .page-title {
+    font-size: 21px;
+  }
+
+  .page-subtitle {
+    font-size: 13px;
+  }
+
+  .card-body {
+    padding: 14px;
+  }
+
+  .card-header {
+    padding: 14px;
+  }
+
+  .btn {
+    font-size: 13px;
+  }
+
+  .btn-sm {
+    font-size: 12px;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+
+  .modal-dialog {
+    margin: 5px;
+  }
+
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+
+}
+
+
+/* =========================
+   Extra Small Devices
+========================= */
+
+@media (max-width: 400px) {
+
+  .navbar-brand {
+    font-size: 16px;
+  }
+
+  .app-content {
+    padding: 8px;
+  }
+
+  .mobile-menu-btn {
+    margin: 8px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+}

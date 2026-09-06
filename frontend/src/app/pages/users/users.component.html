@@ -1,0 +1,298 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div
+    class="d-flex justify-content-between align-items-center mb-4"
+  >
+
+    <div>
+      <h3 class="mb-1">
+        Sales Employees
+      </h3>
+
+      <p class="text-muted mb-0">
+        Manage your sales team
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- Messages -->
+
+  <div
+    *ngIf="successMessage"
+    class="alert alert-success"
+  >
+    {{ successMessage }}
+  </div>
+
+  <div
+    *ngIf="errorMessage"
+    class="alert alert-danger"
+  >
+    {{ errorMessage }}
+  </div>
+
+
+  <!-- Create User -->
+
+  <div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+      <h5 class="mb-0">
+        Add Sales Employee
+      </h5>
+
+    </div>
+
+
+    <div class="card-body">
+
+      <form
+        [formGroup]="userForm"
+        (ngSubmit)="createSalesUser()"
+      >
+
+        <div class="row g-3">
+
+          <!-- Name -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              placeholder="Enter name"
+            >
+
+            <div
+              *ngIf="
+                userForm.controls.name.touched &&
+                userForm.controls.name.invalid
+              "
+              class="text-danger small mt-1"
+            >
+              Name is required
+            </div>
+
+          </div>
+
+
+          <!-- Email -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Email
+            </label>
+
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="Enter email"
+            >
+
+            <div
+              *ngIf="
+                userForm.controls.email.touched &&
+                userForm.controls.email.invalid
+              "
+              class="text-danger small mt-1"
+            >
+              Enter a valid email
+            </div>
+
+          </div>
+
+
+          <!-- Password -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Password
+            </label>
+
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              placeholder="Minimum 6 characters"
+            >
+
+            <div
+              *ngIf="
+                userForm.controls.password.touched &&
+                userForm.controls.password.invalid
+              "
+              class="text-danger small mt-1"
+            >
+              Password must contain at least 6 characters
+            </div>
+
+          </div>
+
+
+          <!-- Button -->
+
+          <div class="col-12">
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="submitting"
+            >
+
+              <span
+                *ngIf="submitting"
+                class="spinner-border spinner-border-sm me-2"
+              ></span>
+
+              {{ submitting
+                ? 'Creating...'
+                : 'Create Employee'
+              }}
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- Employee List -->
+
+  <div class="card shadow-sm">
+
+    <div class="card-header bg-white">
+
+      <h5 class="mb-0">
+        Sales Team
+      </h5>
+
+    </div>
+
+
+    <div class="card-body p-0">
+
+      <!-- Loading -->
+
+      <div
+        *ngIf="loading"
+        class="text-center py-5"
+      >
+
+        <div
+          class="spinner-border"
+        ></div>
+
+        <p class="mt-2 text-muted">
+          Loading employees...
+        </p>
+
+      </div>
+
+
+      <!-- Empty -->
+
+      <div
+        *ngIf="
+          !loading &&
+          salesUsers.length === 0
+        "
+        class="text-center py-5"
+      >
+
+        <p class="text-muted mb-0">
+          No sales employees found
+        </p>
+
+      </div>
+
+
+      <!-- Table -->
+
+      <div
+        *ngIf="
+          !loading &&
+          salesUsers.length > 0
+        "
+        class="table-responsive"
+      >
+
+        <table
+          class="table table-hover mb-0"
+        >
+
+          <thead>
+
+            <tr>
+
+              <th>
+                Name
+              </th>
+
+              <th>
+                Email
+              </th>
+
+              <th>
+                Role
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="let user of salesUsers"
+            >
+
+              <td>
+                {{ user.name }}
+              </td>
+
+              <td>
+                {{ user.email }}
+              </td>
+
+              <td>
+
+                <span
+                  class="badge bg-primary"
+                >
+                  {{ user.role }}
+                </span>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

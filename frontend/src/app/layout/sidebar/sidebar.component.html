@@ -1,0 +1,58 @@
+<button class="mobile-menu-btn btn btn-primary" type="button" (click)="toggleSidebar()">
+
+  ☰ Menu
+</button>
+
+<div class="sidebar-overlay" *ngIf="isOpen" (click)="closeSidebar()">
+</div>
+
+<aside class="sidebar bg-dark text-white" [class.sidebar-open]="isOpen">
+
+  <div class="sidebar-title">
+    CRM MENU
+
+    <button class="btn btn-sm btn-outline-light d-md-none float-end" (click)="closeSidebar()">
+
+      ✕
+    </button>
+  </div>
+
+  <ul class="nav flex-column">
+
+    <li class="nav-item">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link text-white" (click)="closeSidebar()">
+
+        Dashboard
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/leads" routerLinkActive="active" class="nav-link text-white" (click)="closeSidebar()">
+
+        Leads
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/properties" routerLinkActive="active" class="nav-link text-white" (click)="closeSidebar()">
+
+        Properties
+
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/bookings" routerLinkActive="active" class="nav-link text-white" (click)="closeSidebar()">
+
+        Bookings
+      </a>
+    </li>
+    <li class="nav-item">
+      <a *ngIf="isAdmin" routerLink="/users" routerLinkActive="active" class="nav-link">
+        Users
+      </a>
+    </li>
+
+  </ul>
+
+</aside>

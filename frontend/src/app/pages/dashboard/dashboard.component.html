@@ -1,0 +1,118 @@
+<div class="container-fluid p-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1">Dashboard</h3>
+      <p class="text-muted mb-0">
+        Real Estate CRM overview
+      </p>
+    </div>
+
+    <button
+      class="btn btn-outline-primary"
+      (click)="loadStats()">
+      Refresh
+    </button>
+  </div>
+
+
+  <div
+    *ngIf="loading"
+    class="text-center py-5">
+
+    <div class="spinner-border text-primary"></div>
+
+    <p class="mt-2 text-muted">
+      Loading dashboard...
+    </p>
+
+  </div>
+
+
+  <div
+    *ngIf="errorMessage"
+    class="alert alert-danger">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <div
+    class="row g-4"
+    *ngIf="stats && !loading">
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">Total Leads</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.totalLeads }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">New Leads</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.newLeads }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">Follow-ups</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.followUps }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">Bookings</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.totalBookings }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">Available Units</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.availableUnits }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4 col-lg-2">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <small class="text-muted">Booked Units</small>
+          <h3 class="fw-bold mt-2">
+            {{ stats.bookedUnits }}
+          </h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
