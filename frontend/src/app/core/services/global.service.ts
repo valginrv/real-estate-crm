@@ -7,7 +7,7 @@ export class GlobalService {
 
   constructor() {}
 
-  public LOCAL: boolean = true;
+  public LOCAL: boolean = false;
 
   public GLOBAL_API_URL: string = this.LOCAL
     ? 'http://localhost:5000/'
