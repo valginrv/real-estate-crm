@@ -68,7 +68,3 @@ POST /api/bookings
 4. Atomic unit update prevents double booking.
 5. Bootstrap is used for responsive UI.
 
-## Live Demo
-
-Frontend: your-live-url
-Backend: your-backend-url
