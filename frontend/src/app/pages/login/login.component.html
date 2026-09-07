@@ -1,58 +1,109 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-5">
+<div class="login-wrapper">
+  <div class="login-card shadow-lg">
 
-      <div class="card shadow">
-        <div class="card-body p-4">
+    <!-- Left branding panel -->
+    <div class="brand-panel">
+      <div class="brand-content">
+        <div class="brand-icon">
+          <i class="bi bi-building"></i>
+        </div>
+        <h2>Real Estate CRM</h2>
+        <p>Manage listings, leads, and clients — all in one place.</p>
+      </div>
+    </div>
 
-          <h3 class="text-center mb-4">
-            Real Estate CRM
-          </h3>
+    <!-- Right form panel -->
+    <div class="form-panel">
+      <div class="form-inner">
 
-          <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <h3 class="mb-1">Welcome back</h3>
+        <p class="text-muted mb-4">Sign in to continue to your dashboard</p>
 
-            <div class="mb-3">
-              <label class="form-label">Email</label>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
 
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light">
+                <i class="bi bi-envelope"></i>
+              </span>
               <input
                 type="email"
                 class="form-control"
                 formControlName="email"
-                placeholder="Enter email"
+                placeholder="you@example.com"
+                [class.is-invalid]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
               />
             </div>
+            <div
+              class="invalid-feedback d-block"
+              *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+            >
+              Enter a valid email address
+            </div>
+          </div>
 
-            <div class="mb-3">
-              <label class="form-label">Password</label>
-
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text bg-light">
+                <i class="bi bi-lock"></i>
+              </span>
               <input
-                type="password"
+                [type]="showPassword ? 'text' : 'password'"
                 class="form-control"
                 formControlName="password"
                 placeholder="Enter password"
+                [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
               />
+              <span
+                class="input-group-text bg-light toggle-eye"
+                (click)="showPassword = !showPassword"
+              >
+                <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+              </span>
             </div>
-
             <div
-              *ngIf="errorMessage"
-              class="alert alert-danger"
+              class="invalid-feedback d-block"
+              *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
             >
-              {{ errorMessage }}
+              Password is required
             </div>
+          </div>
 
-            <button
-              type="submit"
-              class="btn btn-primary w-100"
-              [disabled]="loginForm.invalid"
-            >
-              Login
-            </button>
+          <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="remember" />
+              <label class="form-check-label small" for="remember">Remember me</label>
+            </div>
+            <a href="#" class="small text-decoration-none">Forgot password?</a>
+          </div> -->
 
-          </form>
+          <div class="alert alert-danger py-2 small" *ngIf="errorMessage">
+            <i class="bi bi-exclamation-circle me-1"></i>{{ errorMessage }}
+          </div>
 
-        </div>
+          <button
+            type="submit"
+            class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
+            [disabled]="loginForm.invalid || isLoading"
+          >
+            <span
+              class="spinner-border spinner-border-sm"
+              *ngIf="isLoading"
+              role="status"
+            ></span>
+            {{ isLoading ? 'Signing in...' : 'Login' }}
+          </button>
+
+        </form>
+
+        <!-- <p class="text-center text-muted small mt-4 mb-0">
+          Don't have an account? <a href="#" class="text-decoration-none">Contact admin</a>
+        </p> -->
+
       </div>
-
     </div>
+
   </div>
 </div>

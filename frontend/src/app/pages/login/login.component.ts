@@ -15,18 +15,21 @@ import { Router } from '@angular/router';
     CommonModule,
     ReactiveFormsModule
   ],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
 
   errorMessage = '';
+  isLoading = false;
+  showPassword = false;
 
   loginForm;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-      private router: Router
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,29 +38,28 @@ export class LoginComponent {
   }
 
   login() {
-    if (this.loginForm.invalid) {
+    if (this.loginForm.invalid || this.isLoading) {
       return;
     }
+
+    this.isLoading = true;
+    this.errorMessage = '';
 
     this.authService.login({
       email: this.loginForm.value.email!,
       password: this.loginForm.value.password!
     }).subscribe({
       next: (response) => {
-        console.log('Login success:', response);
-
         localStorage.setItem('token', response.token);
-        localStorage.setItem(
-          'user',
-          JSON.stringify(response.user)
-        );
-         this.router.navigate(['/dashboard']);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        this.router.navigate(['/dashboard']);
       },
-
       error: (error) => {
-        console.error(error);
-        this.errorMessage =
-          error.error?.message || 'Login failed';
+        this.isLoading = false;
+        this.errorMessage = error.error?.message || 'Login failed';
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
   }

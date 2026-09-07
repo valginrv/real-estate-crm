@@ -1,0 +1,83 @@
+.login-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fb 0%, #e9edf5 100%);
+  padding: 1.5rem;
+}
+
+.login-card {
+  display: flex;
+  width: 100%;
+  max-width: 880px;
+  min-height: 520px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #fff;
+  animation: fadeInUp 0.4s ease;
+}
+
+.brand-panel {
+  flex: 1;
+  background: linear-gradient(160deg, #2b5fdb, #1a3f9c);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+
+  .brand-content {
+    text-align: center;
+
+    .brand-icon {
+      font-size: 2.75rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    h2 {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      opacity: 0.85;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+.form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+}
+
+.form-inner {
+  width: 100%;
+  max-width: 340px;
+}
+
+.toggle-eye {
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .brand-panel {
+    display: none;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
