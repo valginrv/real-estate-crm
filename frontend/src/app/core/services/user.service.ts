@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { GlobalService } from './global.service';
 
 export interface SalesUser {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: string;

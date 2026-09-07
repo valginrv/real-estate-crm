@@ -5,7 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class GlobalService {
 
-  constructor() { }
+  constructor() {}
 
-public GLOBAL_API_URL: any = 'https://real-estate-crm-mbso.onrender.com/';
+  public LOCAL: boolean = true;
+
+  public GLOBAL_API_URL: string = this.LOCAL
+    ? 'http://localhost:5000/'
+    : 'https://real-estate-crm-mbso.onrender.com/';
 }

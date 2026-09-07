@@ -10,372 +10,301 @@
       </p>
     </div>
 
-   <button
-  class="btn btn-primary"
-  data-bs-toggle="modal"
-  data-bs-target="#addLeadModal"
->
-  + Add Lead
-</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLeadModal">
+      + Add Lead
+    </button>
 
 
 
   </div>
-<div
-  class="modal fade"
-  id="addLeadModal"
-  tabindex="-1"
->
-  <div class="modal-dialog modal-lg">
+  <div class="modal fade" id="addLeadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
 
-    <div class="modal-content">
+      <div class="modal-content">
 
-      <div class="modal-header">
+        <div class="modal-header">
 
-       <h5 class="modal-title">
-  {{ isEditMode ? 'Edit Lead' : 'Add Lead' }}
-</h5>
-
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-
-      </div>
-
-
-      <form
-        [formGroup]="leadForm"
-        (ngSubmit)="createLead()"
-      >
-
-        <div class="modal-body">
-
-          <div class="row g-3">
-
-            <!-- Name -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Name *
-              </label>
-
-              <input
-                type="text"
-                class="form-control"
-                formControlName="name"
-                placeholder="Enter name"
-              />
-
-            </div>
-
-
-            <!-- Phone -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Phone *
-              </label>
-
-              <input
-                type="text"
-                class="form-control"
-                formControlName="phone"
-                placeholder="Enter phone"
-              />
-
-            </div>
-
-
-            <!-- Email -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Email
-              </label>
-
-              <input
-                type="email"
-                class="form-control"
-                formControlName="email"
-                placeholder="Enter email"
-              />
-
-            </div>
-
-
-            <!-- Source -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Source
-              </label>
-
-              <select
-                class="form-select"
-                formControlName="source"
-              >
-
-                <option value="">
-                  Select Source
-                </option>
-
-                <option value="Website">
-                  Website
-                </option>
-
-                <option value="Facebook">
-                  Facebook
-                </option>
-
-                <option value="Referral">
-                  Referral
-                </option>
-
-                <option value="Walk-in">
-                  Walk-in
-                </option>
-
-              </select>
-
-            </div>
-
-
-            <!-- Stage -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Stage
-              </label>
-
-              <select
-                class="form-select"
-                formControlName="stage"
-              >
-
-                <option
-                  *ngFor="let stage of stages"
-                  [value]="stage"
-                >
-                  {{ stage }}
-                </option>
-
-              </select>
-
-            </div>
-
-            <div class="col-md-6">
-  <label class="form-label">
-    Assign To
-  </label>
-
-  <select
-    class="form-select"
-    formControlName="assignedTo">
-
-    <option value="">
-      Select Sales Employee
-    </option>
-
-    <option
-      *ngFor="let employee of salesUsers"
-      [value]="employee.id">
-
-      {{ employee.name }} - {{ employee.email }}
-
-    </option>
-
-  </select>
-</div>
-
-
-            <!-- Follow Up -->
-
-            <div class="col-md-6">
-
-              <label class="form-label">
-                Follow-up Date
-              </label>
-
-              <input
-                type="date"
-                class="form-control"
-                formControlName="followUpDate"
-              />
-
-            </div>
-
-
-            <!-- Notes -->
-
-            <div class="col-12">
-
-              <label class="form-label">
-                Notes
-              </label>
-
-              <textarea
-                class="form-control"
-                rows="3"
-                formControlName="notes"
-                placeholder="Enter notes"
-              ></textarea>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="modal-footer">
-
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-
-          <button
-  type="submit"
-  class="btn btn-primary"
-  [disabled]="leadForm.invalid"
->
-  {{ isEditMode ? 'Update Lead' : 'Create Lead' }}
-</button>
-
-        </div>
-
-      </form>
-
-    </div>
-
-  </div>
-</div>
-
-<!-- View Lead Modal -->
-<div
-  class="modal fade"
-  id="viewLeadModal"
-  tabindex="-1"
-  aria-labelledby="viewLeadModalLabel"
-  aria-hidden="true">
-
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-
-    <div class="modal-content">
-
-      <!-- Header -->
-      <div class="modal-header">
-
-        <div>
-          <h5 class="modal-title" id="viewLeadModalLabel">
-            Lead Details
+          <h5 class="modal-title">
+            {{ isEditMode ? 'Edit Lead' : 'Add Lead' }}
           </h5>
 
-          <small class="text-muted">
-            Customer information and follow-up details
-          </small>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
         </div>
 
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close">
-        </button>
 
-      </div>
+        <form [formGroup]="leadForm" (ngSubmit)="createLead()">
 
-      <!-- Body -->
-      <div class="modal-body" *ngIf="selectedLead">
+          <div class="modal-body">
 
-        <!-- Customer Details -->
-        <div class="card border-0 bg-light mb-4">
+            <div class="row g-3">
 
-          <div class="card-body">
+              <!-- Name -->
 
-            <h6 class="fw-bold mb-3">
-              Customer Details
-            </h6>
+              <div class="col-md-6">
 
-            <div class="row">
+                <label class="form-label">
+                  Name *
+                </label>
 
-              <div class="col-md-6 mb-3">
-                <small class="text-muted d-block">
-                  Customer Name
-                </small>
+                <input type="text" class="form-control" formControlName="name" placeholder="Enter name" />
 
-                <span class="fw-semibold">
-                  {{ selectedLead.name }}
-                </span>
               </div>
 
-              <div class="col-md-6 mb-3">
-                <small class="text-muted d-block">
-                  Phone
-                </small>
 
-                <span>
-                  {{ selectedLead.phone }}
-                </span>
+              <!-- Phone -->
+
+              <div class="col-md-6">
+
+                <label class="form-label">
+                  Phone *
+                </label>
+
+                <input type="text" class="form-control" formControlName="phone" placeholder="Enter phone" />
+
               </div>
 
-              <div class="col-md-6 mb-3">
-                <small class="text-muted d-block">
+
+              <!-- Email -->
+
+              <div class="col-md-6">
+
+                <label class="form-label">
                   Email
-                </small>
+                </label>
 
-                <span>
-                  {{ selectedLead.email || 'Not provided' }}
-                </span>
+                <input type="email" class="form-control" formControlName="email" placeholder="Enter email" />
+
               </div>
 
-              <div class="col-md-6 mb-3">
-                <small class="text-muted d-block">
-                  Lead Source
-                </small>
 
-                <span>
-                  {{ selectedLead.source || 'Not specified' }}
-                </span>
+              <!-- Source -->
+
+              <div class="col-md-6">
+
+                <label class="form-label">
+                  Source
+                </label>
+
+                <select class="form-select" formControlName="source">
+
+                  <option value="">
+                    Select Source
+                  </option>
+
+                  <option value="Website">
+                    Website
+                  </option>
+
+                  <option value="Facebook">
+                    Facebook
+                  </option>
+
+                  <option value="Referral">
+                    Referral
+                  </option>
+
+                  <option value="Walk-in">
+                    Walk-in
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <!-- Stage -->
+
+              <div class="col-md-6">
+
+                <label class="form-label">
+                  Stage
+                </label>
+
+                <select class="form-select" formControlName="stage">
+
+                  <option *ngFor="let stage of stages" [value]="stage">
+                    {{ stage }}
+                  </option>
+
+                </select>
+
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">
+                  Assign To
+                </label>
+
+                <select class="form-select" formControlName="assignedTo">
+
+                  <option value="">
+                    Select Sales Employee
+                  </option>
+
+                  <option *ngFor="let employee of salesUsers" [value]="employee._id">
+
+                    {{ employee.name }} - {{ employee.email }}
+
+                  </option>
+
+                </select>
+              </div>
+
+
+              <!-- Follow Up -->
+
+              <div class="col-md-6">
+
+                <label class="form-label">
+                  Follow-up Date
+                </label>
+
+                <input type="date" class="form-control" formControlName="followUpDate" />
+
+              </div>
+
+
+              <!-- Notes -->
+
+              <div class="col-12">
+
+                <label class="form-label">
+                  Notes
+                </label>
+
+                <textarea class="form-control" rows="3" formControlName="notes" placeholder="Enter notes"></textarea>
+
               </div>
 
             </div>
 
           </div>
 
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+
+            <button type="submit" class="btn btn-primary" [disabled]="leadForm.invalid">
+              {{ isEditMode ? 'Update Lead' : 'Create Lead' }}
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- View Lead Modal -->
+  <div class="modal fade" id="viewLeadModal" tabindex="-1" aria-labelledby="viewLeadModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+      <div class="modal-content">
+
+        <!-- Header -->
+        <div class="modal-header">
+
+          <div>
+            <h5 class="modal-title" id="viewLeadModalLabel">
+              Lead Details
+            </h5>
+
+            <small class="text-muted">
+              Customer information and follow-up details
+            </small>
+          </div>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          </button>
+
         </div>
 
+        <!-- Body -->
+        <div class="modal-body" *ngIf="selectedLead">
 
-        <!-- Lead Status -->
-        <div class="card border-0 bg-light mb-4">
+          <!-- Customer Details -->
+          <div class="card border-0 bg-light mb-4">
 
-          <div class="card-body">
+            <div class="card-body">
 
-            <h6 class="fw-bold mb-3">
-              Lead Status
-            </h6>
+              <h6 class="fw-bold mb-3">
+                Customer Details
+              </h6>
 
-            <div class="row">
+              <div class="row">
 
-              <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted d-block">
+                    Customer Name
+                  </small>
 
-                <small class="text-muted d-block">
-                  Current Stage
-                </small>
+                  <span class="fw-semibold">
+                    {{ selectedLead.name }}
+                  </span>
+                </div>
 
-                <span
-                  class="badge"
-                  [ngClass]="{
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted d-block">
+                    Phone
+                  </small>
+
+                  <span>
+                    {{ selectedLead.phone }}
+                  </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted d-block">
+                    Email
+                  </small>
+
+                  <span>
+                    {{ selectedLead.email || 'Not provided' }}
+                  </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted d-block">
+                    Lead Source
+                  </small>
+
+                  <span>
+                    {{ selectedLead.source || 'Not specified' }}
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Lead Status -->
+          <div class="card border-0 bg-light mb-4">
+
+            <div class="card-body">
+
+              <h6 class="fw-bold mb-3">
+                Lead Status
+              </h6>
+
+              <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                  <small class="text-muted d-block">
+                    Current Stage
+                  </small>
+
+                  <span class="badge" [ngClass]="{
                     'bg-primary': selectedLead.stage === 'New',
                     'bg-info': selectedLead.stage === 'Contacted',
                     'bg-warning text-dark': selectedLead.stage === 'Site Visit',
@@ -385,28 +314,52 @@
                     'bg-danger': selectedLead.stage === 'Lost'
                   }">
 
-                  {{ selectedLead.stage }}
+                    {{ selectedLead.stage }}
 
-                </span>
+                  </span>
 
-              </div>
+                </div>
 
 
-              <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3">
 
-                <small class="text-muted d-block">
-                  Follow-up Date
-                </small>
+                  <small class="text-muted d-block">
+                    Follow-up Date
+                  </small>
 
-                <span>
-                  {{
+                  <span>
+                    {{
                     selectedLead.followUpDate
-                      ? (selectedLead.followUpDate | date:'dd MMM yyyy')
-                      : 'No follow-up scheduled'
-                  }}
-                </span>
+                    ? (selectedLead.followUpDate | date:'dd MMM yyyy')
+                    : 'No follow-up scheduled'
+                    }}
+                  </span>
+
+                </div>
 
               </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Notes -->
+          <div class="card border-0 bg-light">
+
+            <div class="card-body">
+
+              <h6 class="fw-bold mb-3">
+                Notes
+              </h6>
+
+              <p class="mb-0 text-muted" *ngIf="selectedLead.notes">
+                {{ selectedLead.notes }}
+              </p>
+
+              <p class="mb-0 text-muted fst-italic" *ngIf="!selectedLead.notes">
+                No notes added for this lead.
+              </p>
 
             </div>
 
@@ -415,51 +368,19 @@
         </div>
 
 
-        <!-- Notes -->
-        <div class="card border-0 bg-light">
+        <!-- Footer -->
+        <div class="modal-footer">
 
-          <div class="card-body">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
 
-            <h6 class="fw-bold mb-3">
-              Notes
-            </h6>
-
-            <p
-              class="mb-0 text-muted"
-              *ngIf="selectedLead.notes">
-              {{ selectedLead.notes }}
-            </p>
-
-            <p
-              class="mb-0 text-muted fst-italic"
-              *ngIf="!selectedLead.notes">
-              No notes added for this lead.
-            </p>
-
-          </div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+            (click)="selectedLead && editLead(selectedLead)">
+            Edit Lead
+          </button>
 
         </div>
-
-      </div>
-
-
-      <!-- Footer -->
-      <div class="modal-footer">
-
-        <button
-          type="button"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal">
-          Close
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-bs-dismiss="modal"
-          (click)="selectedLead && editLead(selectedLead)">
-          Edit Lead
-        </button>
 
       </div>
 
@@ -467,17 +388,10 @@
 
   </div>
 
-</div>
 
-
-<!-- Hidden button to open View modal -->
-<button
-  id="viewLeadButton"
-  type="button"
-  class="d-none"
-  data-bs-toggle="modal"
-  data-bs-target="#viewLeadModal">
-</button>
+  <!-- Hidden button to open View modal -->
+  <button id="viewLeadButton" type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#viewLeadModal">
+  </button>
 
   <!-- Search & Filter -->
 
@@ -489,33 +403,21 @@
 
         <div class="col-md-6">
 
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search name, phone or email"
-            [(ngModel)]="search"
-            (keyup.enter)="loadLeads()"
-          />
+          <input type="text" class="form-control" placeholder="Search name, phone or email" [(ngModel)]="search"
+            (keyup.enter)="loadLeads()" />
 
         </div>
 
 
         <div class="col-md-4">
 
-          <select
-            class="form-select"
-            [(ngModel)]="selectedStage"
-            (change)="loadLeads()"
-          >
+          <select class="form-select" [(ngModel)]="selectedStage" (change)="loadLeads()">
 
             <option value="">
               All Stages
             </option>
 
-            <option
-              *ngFor="let stage of stages"
-              [value]="stage"
-            >
+            <option *ngFor="let stage of stages" [value]="stage">
               {{ stage }}
             </option>
 
@@ -526,10 +428,7 @@
 
         <div class="col-md-2">
 
-          <button
-            class="btn btn-secondary w-100"
-            (click)="loadLeads()"
-          >
+          <button class="btn btn-secondary w-100" (click)="loadLeads()">
             Search
           </button>
 
@@ -544,10 +443,7 @@
 
   <!-- Loading -->
 
-  <div
-    *ngIf="loading"
-    class="text-center py-5"
-  >
+  <div *ngIf="loading" class="text-center py-5">
     <div class="spinner-border"></div>
 
     <p class="mt-2">
@@ -558,30 +454,21 @@
 
   <!-- Error -->
 
-  <div
-    *ngIf="!loading && errorMessage"
-    class="alert alert-danger"
-  >
+  <div *ngIf="!loading && errorMessage" class="alert alert-danger">
     {{ errorMessage }}
   </div>
 
 
   <!-- Empty -->
 
-  <div
-    *ngIf="!loading && !errorMessage && leads.length === 0"
-    class="alert alert-info"
-  >
+  <div *ngIf="!loading && !errorMessage && leads.length === 0" class="alert alert-info">
     No leads found.
   </div>
 
 
   <!-- Table -->
 
-  <div
-    *ngIf="!loading && leads.length > 0"
-    class="card shadow-sm"
-  >
+  <div *ngIf="!loading && leads.length > 0" class="card shadow-sm">
 
     <div class="table-responsive">
 
@@ -630,25 +517,20 @@
 
             <td>
               {{ lead.followUpDate
-                ? (lead.followUpDate | date:'dd-MM-yyyy')
-                : '-'
+              ? (lead.followUpDate | date:'dd-MM-yyyy')
+              : '-'
               }}
             </td>
 
             <td>
 
-              <button
-  class="btn btn-sm btn-info"
-  (click)="viewLead(lead)">
-  View
-</button>
+              <button class="btn btn-sm btn-info" (click)="viewLead(lead)">
+                View
+              </button>&nbsp;
 
-              <button
-  class="btn btn-sm btn-outline-secondary"
-  (click)="editLead(lead)"
->
-  Edit
-</button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="editLead(lead)">
+                Edit
+              </button>
 
             </td>
 

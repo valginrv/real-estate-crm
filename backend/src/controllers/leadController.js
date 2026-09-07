@@ -196,6 +196,16 @@ const updateLead = async (req, res) => {
       });
     }
 
+    if (req.user.role === "admin") {
+  const assignedTo = req.body.assignedTo;
+
+  if (assignedTo && assignedTo !== "undefined" && assignedTo !== "null") {
+    updateData.assignedTo = assignedTo;
+  } else if (assignedTo === null) {
+    updateData.assignedTo = null;  // allow explicit unassign
+  }
+}
+
     // Sales can update only their assigned leads
     if (
       req.user.role === "sales" &&

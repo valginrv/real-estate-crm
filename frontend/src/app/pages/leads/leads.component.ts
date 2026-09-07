@@ -278,8 +278,10 @@ export class LeadsComponent implements OnInit {
     };
 
     if (formValue.assignedTo) {
-      leadData.assignedTo = formValue.assignedTo;
-    }
+  leadData.assignedTo = formValue.assignedTo;
+} else if (this.isEditMode) {
+  leadData.assignedTo = null;   // explicitly unassign during edit
+}
 
     // =========================
     // UPDATE
