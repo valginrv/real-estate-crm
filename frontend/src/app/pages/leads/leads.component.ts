@@ -267,33 +267,19 @@ export class LeadsComponent implements OnInit {
       this.leadForm.value;
 
 
-    const leadData = {
-
-      name:
-        formValue.name || '',
-
-      phone:
-        formValue.phone || '',
-
-      email:
-        formValue.email || '',
-
-      source:
-        formValue.source || '',
-
-      stage:
-        formValue.stage || 'New',
-
-       assignedTo: formValue.assignedTo || undefined,
-
-      notes:
-        formValue.notes || '',
-
-      followUpDate:
-        formValue.followUpDate || ''
-
+    const leadData: any = {
+      name: formValue.name || '',
+      phone: formValue.phone || '',
+      email: formValue.email || '',
+      source: formValue.source || '',
+      stage: formValue.stage || 'New',
+      notes: formValue.notes || '',
+      followUpDate: formValue.followUpDate || null
     };
 
+    if (formValue.assignedTo) {
+      leadData.assignedTo = formValue.assignedTo;
+    }
 
     // =========================
     // UPDATE
@@ -434,38 +420,38 @@ export class LeadsComponent implements OnInit {
   // VIEW LEAD
   // =========================
 
-viewLead(lead: Lead): void {
+  viewLead(lead: Lead): void {
 
-  this.leadService
-    .getLeadById(lead._id)
-    .subscribe({
+    this.leadService
+      .getLeadById(lead._id)
+      .subscribe({
 
-      next: (response) => {
+        next: (response) => {
 
-        this.selectedLead = response;
+          this.selectedLead = response;
 
-        const button =
-          document.getElementById(
-            'viewLeadButton'
-          ) as HTMLElement;
+          const button =
+            document.getElementById(
+              'viewLeadButton'
+            ) as HTMLElement;
 
-        button?.click();
-      },
+          button?.click();
+        },
 
-      error: (error) => {
+        error: (error) => {
 
-        console.error(
-          'GET LEAD ERROR:',
-          error
-        );
+          console.error(
+            'GET LEAD ERROR:',
+            error
+          );
 
-        this.errorMessage =
-          error.error?.message ||
-          'Failed to load lead details';
-      }
+          this.errorMessage =
+            error.error?.message ||
+            'Failed to load lead details';
+        }
 
-    });
-}
+      });
+  }
 
 
   // =========================
