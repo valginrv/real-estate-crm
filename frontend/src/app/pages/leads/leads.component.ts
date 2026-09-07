@@ -417,7 +417,33 @@ export class LeadsComponent implements OnInit {
 
   }
 
+ deleteLead(lead: Lead): void {
 
+  if (!confirm(`Are you sure you want to delete lead "${lead.name}"?`)) {
+    return;
+  }
+
+  this.leadService.deleteLead(lead._id).subscribe({
+
+    next: (response) => {
+
+      console.log('Lead deleted successfully:', response);
+
+      this.loadLeads();
+
+    },
+
+    error: (error) => {
+
+      console.error('DELETE LEAD ERROR:', error);
+
+      this.errorMessage =
+        error.error?.message || 'Failed to delete lead';
+
+    }
+
+  });
+}
   // =========================
   // VIEW LEAD
   // =========================

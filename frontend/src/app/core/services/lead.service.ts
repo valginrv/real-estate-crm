@@ -86,4 +86,9 @@ getLeadById(id: string) {
     `${this.apiUrl}/${id}`
   );
 }
+deleteLead(id: string): Observable<any> {
+  return this.http.delete(
+    `${this.apiUrl}/${id}`
+  );
+}
 }

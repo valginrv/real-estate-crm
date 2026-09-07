@@ -156,7 +156,7 @@ const getLeadById = async (req, res) => {
     if (
       req.user.role === "sales" &&
       lead.assignedTo?._id.toString() !==
-        req.user.userId
+      req.user.userId
     ) {
       return res.status(403).json({
         message:
@@ -197,14 +197,14 @@ const updateLead = async (req, res) => {
     }
 
     if (req.user.role === "admin") {
-  const assignedTo = req.body.assignedTo;
+      const assignedTo = req.body.assignedTo;
 
-  if (assignedTo && assignedTo !== "undefined" && assignedTo !== "null") {
-    updateData.assignedTo = assignedTo;
-  } else if (assignedTo === null) {
-    updateData.assignedTo = null;  // allow explicit unassign
-  }
-}
+      if (assignedTo && assignedTo !== "undefined" && assignedTo !== "null") {
+        updateData.assignedTo = assignedTo;
+      } else if (assignedTo === null) {
+        updateData.assignedTo = null;  // allow explicit unassign
+      }
+    }
 
     // Sales can update only their assigned leads
     if (
@@ -286,7 +286,7 @@ const deleteLead = async (req, res) => {
     if (
       req.user.role === "sales" &&
       lead.assignedTo?.toString() !==
-        req.user.userId
+      req.user.userId
     ) {
       return res.status(403).json({
         message:
