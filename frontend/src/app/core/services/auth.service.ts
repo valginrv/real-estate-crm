@@ -33,7 +33,7 @@ export class AuthService {
 
   login(data: {
     email: string;
-    password: string;
+    password: string; 
   }): Observable<LoginResponse> {
 
     return this.http.post<LoginResponse>(

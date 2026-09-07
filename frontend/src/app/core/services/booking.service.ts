@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 export interface Booking {
   _id: string;
@@ -40,12 +41,14 @@ interface BookingResponse {
 })
 export class BookingService {
 
-  private apiUrl =
-    'http://localhost:5000/api/bookings';
+
+  private apiUrl: string;
 
   constructor(
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,public globalService: GlobalService
+  ) {
+    this.apiUrl = `${this.globalService.GLOBAL_API_URL}api/bookings`;
+  }
 
   getBookings(): Observable<BookingResponse> {
 
