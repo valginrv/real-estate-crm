@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 export interface Lead {
   _id: string;
@@ -29,9 +30,10 @@ interface LeadResponse {
 })
 export class LeadService {
 
-  private apiUrl = 'http://localhost:5000/api/leads';
-
-  constructor(private http: HttpClient) {}
+private apiUrl: string;
+  constructor(private http: HttpClient, public globalService: GlobalService) {
+     this.apiUrl = `${this.globalService.GLOBAL_API_URL}api/leads`;
+  }
 
   getLeads(
     search: string = '',

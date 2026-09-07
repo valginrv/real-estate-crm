@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GlobalService } from './global.service';
 
 interface LoginResponse {
   message: string;
@@ -24,9 +25,11 @@ export interface SalesEmployee {
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:5000/api/auth';
+  private apiUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public globalService: GlobalService) {
+     this.apiUrl = `${this.globalService.GLOBAL_API_URL}api/auth`;
+  }
 
   login(data: {
     email: string;
