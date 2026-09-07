@@ -196,16 +196,6 @@ const updateLead = async (req, res) => {
       });
     }
 
-    if (req.user.role === "admin") {
-      const assignedTo = req.body.assignedTo;
-
-      if (assignedTo && assignedTo !== "undefined" && assignedTo !== "null") {
-        updateData.assignedTo = assignedTo;
-      } else if (assignedTo === null) {
-        updateData.assignedTo = null;  // allow explicit unassign
-      }
-    }
-
     // Sales can update only their assigned leads
     if (
       req.user.role === "sales" &&
@@ -216,6 +206,7 @@ const updateLead = async (req, res) => {
       });
     }
 
+    // ✅ declare updateData FIRST, before using it anywhere
     const updateData = {
       name: req.body.name,
       phone: req.body.phone,
@@ -223,20 +214,17 @@ const updateLead = async (req, res) => {
       source: req.body.source,
       stage: req.body.stage,
       notes: req.body.notes,
-      followUpDate: req.body.followUpDate
+      followUpDate: req.body.followUpDate || null
     };
 
-    // ADMIN
+    // ADMIN — assign or explicitly unassign
     if (req.user.role === "admin") {
       const assignedTo = req.body.assignedTo;
 
-      // Only assign if valid value is received
-      if (
-        assignedTo &&
-        assignedTo !== "undefined" &&
-        assignedTo !== "null"
-      ) {
+      if (assignedTo && assignedTo !== "undefined" && assignedTo !== "null") {
         updateData.assignedTo = assignedTo;
+      } else if (assignedTo === null || assignedTo === "") {
+        updateData.assignedTo = null;   // explicit unassign
       }
     }
 
@@ -256,7 +244,6 @@ const updateLead = async (req, res) => {
 
   } catch (error) {
     console.error("UPDATE LEAD ERROR:", error);
-
     res.status(500).json({
       message: "Server error"
     });

@@ -278,10 +278,10 @@ export class LeadsComponent implements OnInit {
     };
 
     if (formValue.assignedTo) {
-  leadData.assignedTo = formValue.assignedTo;
-} else if (this.isEditMode) {
-  leadData.assignedTo = null;   // explicitly unassign during edit
-}
+      leadData.assignedTo = formValue.assignedTo;
+    } else if (this.isEditMode) {
+      leadData.assignedTo = null;   // explicitly unassign during edit
+    }
 
     // =========================
     // UPDATE
@@ -372,78 +372,70 @@ export class LeadsComponent implements OnInit {
   editLead(lead: Lead): void {
 
     this.isEditMode = true;
-
     this.selectedLeadId = lead._id;
 
-
-    this.leadForm.patchValue({
-
-      name:
-        lead.name,
-
-      phone:
-        lead.phone,
-
-      email:
-        lead.email || '',
-
-      assignedTo:
-        lead.assignedTo?._id || '',
-
-      source:
-        lead.source || '',
-
-      stage:
-        lead.stage,
-
-      notes:
-        lead.notes || '',
-
-      followUpDate:
-        lead.followUpDate
+    const patchAndOpen = () => {
+      this.leadForm.patchValue({
+        name: lead.name,
+        phone: lead.phone,
+        email: lead.email || '',
+        assignedTo: lead.assignedTo?._id || '',
+        source: lead.source || '',
+        stage: lead.stage,
+        notes: lead.notes || '',
+        followUpDate: lead.followUpDate
           ? lead.followUpDate.substring(0, 10)
           : ''
+      });
 
-    });
-
-
-    const button =
-      document.querySelector(
+      const button = document.querySelector(
         '[data-bs-target="#addLeadModal"]'
       ) as HTMLElement;
 
+      button?.click();
+    };
 
-    button?.click();
-
+    // salesUsers innும் load aagalna, aduthu load pannitu patch pannunga
+    if (this.salesUsers.length === 0) {
+      this.userService.getSalesUsers().subscribe({
+        next: (response) => {
+          this.salesUsers = response.users;
+          patchAndOpen();
+        },
+        error: () => patchAndOpen()   // fail aana kூda modal open pannிடலாம்
+      });
+    } else {
+      patchAndOpen();
+    }
   }
 
- deleteLead(lead: Lead): void {
+  deleteLead(lead: Lead): void {
 
-  if (!confirm(`Are you sure you want to delete lead "${lead.name}"?`)) {
-    return;
-  }
-
-  this.leadService.deleteLead(lead._id).subscribe({
-
-    next: (response) => {
-
-      console.log('Lead deleted successfully:', response);
-
-      this.loadLeads();
-
-    },
-
-    error: (error) => {
-
-      console.error('DELETE LEAD ERROR:', error);
-
-      this.errorMessage =
-        error.error?.message || 'Failed to delete lead';
-
+    if (!confirm(`Are you sure you want to delete lead "${lead.name}"?`)) {
+      return;
     }
 
-  });
-}
+    this.leadService.deleteLead(lead._id).subscribe({
+
+      next: (response) => {
+
+        console.log('Lead deleted successfully:', response);
+
+        this.loadLeads();
+
+      },
+
+      error: (error) => {
+
+        console.error('DELETE LEAD ERROR:', error);
+
+        this.errorMessage =
+          error.error?.message || 'Failed to delete lead';
+
+      }
+
+    });
+  }
   // =========================
   // VIEW LEAD
   // =========================
